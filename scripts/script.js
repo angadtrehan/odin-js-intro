@@ -1,9 +1,12 @@
 import { playgame } from "./playGame.js"
+import { updateScores, cleanUp, displayResult } from "./update.js";
 
 const button = document.querySelector("button");
+const tracker = document.querySelector(".tracking");
 const defaultRounds = 5;
 
 button.addEventListener("click", () => {
+    cleanUp();
     const input = document.querySelector("input");
     let rounds = parseInt(input.value) || defaultRounds;
 
@@ -15,22 +18,38 @@ button.addEventListener("click", () => {
         let status = playgame();
         if (status === "WIN") {
             userScore += 1;
-            alert(`You won! Your current score is ${userScore}, and computer's current score is ${computerScore}`);
         } else if (status === "LOSE") {
             computerScore += 1
-            alert(`You lost :( Your current score is ${userScore}, and computer's current score is ${computerScore}`);
         } else if (status === "DRAW") {
-            alert(`It's a draw. Your current score is ${userScore}, and computer's current score is ${computerScore}`);
-        } else {
+            console.log("it was a draw");
+        } 
+        
+        updateScores(userScore, computerScore);
+        if (status === "CANCEL") {
             alert(`You've cancelled the game, calculating score for ${i+1} rounds played`);
             break;
         }
     }
 
-    const result = document.querySelector("p");
-    if (userScore != computerScore) {
-        result.textContent = `You ${userScore > computerScore ? "won" : "lost"}! Winner is ${userScore > computerScore ? "User" : "Computer"}. Your score: ${userScore}, computer's score: ${computerScore}`;
-    } else {
-        result.textContent = `It's a draw :( Try again? Your score: ${userScore}, computer's score: ${computerScore}`;
-    }
+    displayResult(userScore, computerScore);
+});
+
+let scrollVal = 0;
+let posX = 0;
+let posY = 0;
+
+function updateTrackerPos() {
+    tracker.style.top = (posY + scrollVal) + 'px';
+    tracker.style.left = posX + 'px';
+}
+
+document.addEventListener('mousemove', (e) => {
+    posX = e.pageX;
+    posY = e.pageY;
+    tracker.style.top = posY + 'px';
+    tracker.style.left = posX + 'px';
+});
+document.addEventListener('scroll', (e) => {
+    console.log(e);
+    tracker.style.top = posY + window.scrollY + 'px';
 });

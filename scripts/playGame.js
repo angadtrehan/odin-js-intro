@@ -1,3 +1,5 @@
+import { updateMoveHistory } from "./update.js"
+ 
 function getPlayerInput() {
     while (true) {
         let input = prompt("Choose your fighter (rock/paper/scissor)");
@@ -48,6 +50,8 @@ function compare(userInput, computerInput) {
                 return "WIN";
             }
             break;
+        case "CANCEL":
+            return userInput;
         default:
             console.log("Something went wrong");
             throw ReferenceError();
@@ -59,9 +63,7 @@ export function playgame() {
     let userInput = getPlayerInput();
     let computerInput = getComputerInput();
 
-    if (userInput === "CANCEL") {
-        return userInput;
-    }
-
-    return compare(userInput, computerInput);
+    let result = compare(userInput, computerInput);
+    updateMoveHistory(userInput, computerInput, result);
+    return result;
 }

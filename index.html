@@ -3,13 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style.css">
     <title>Rock-Paper-Scissors</title>
 </head>
 <body>
     <input type="number" placeholder="5">
     <button type="button">Let's play</button>
 
-    <p></p>
+    <p class="result">Result: </p>
+    <div class="user-score">
+        <p>User Score: </p>
+        <p class="score"></p>
+    </div>
+    <div class="computer-score">
+        <p class="computer">Computer Score: </p>
+        <p class="score"></p>
+    </div>  
+
+    <div class="movehistorycontainer" style="height: 100vh">
+        <p class="title">Move History:</p>
+        <ol class="movelist">
+            
+        </ol>
+    </div>
+
+    <a href="https://www.google.com">Google</a>
+    <div class="tracking" style="position: absolute; background-color: red; height: 10px; width:10px; border-radius: 50%; top: 0; left: 0; margin-top: -5px; margin-left: -5px; z-index: -1000;"></div>
 
     <script src="./scripts/script.js" type="module"></script>
 </body>
