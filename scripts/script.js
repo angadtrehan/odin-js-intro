@@ -1,21 +1,26 @@
 import { playgame } from "./playGame.js"
-import { updateScores, cleanUp, displayResult } from "./update.js";
+import { updateScores, cleanUp, displayResult, displayRounds } from "./update.js";
 
 const button = document.querySelector("button");
 const tracker = document.querySelector(".tracking");
-const defaultRounds = 5;
+const choices = document.querySelector(".choices");
+let rounds = 5;
+let currentRound = 0;
+let userScore = 0;
+let computerScore = 0;
 
 button.addEventListener("click", () => {
-    cleanUp();
     const input = document.querySelector("input");
-    let rounds = parseInt(input.value) || defaultRounds;
+    rounds = parseInt(input.value) || rounds;
+    cleanUp();
 
     console.log(`We'll be playing ${rounds} rounds!`);
-    let userScore = 0;
-    let computerScore = 0;
+    displayRounds(rounds);
+});
 
-    for (let i = 0; i < rounds; i++) {
-        let status = playgame();
+choices.addEventListener('click', (e) => {
+    if (currentRound < rounds) {
+        let status = playgame(e);
         if (status === "WIN") {
             userScore += 1;
         } else if (status === "LOSE") {
@@ -25,13 +30,11 @@ button.addEventListener("click", () => {
         } 
         
         updateScores(userScore, computerScore);
-        if (status === "CANCEL") {
-            alert(`You've cancelled the game, calculating score for ${i+1} rounds played`);
-            break;
+        if (currentRound === rounds - 1 || status === "CANCEL") {
+            displayResult(userScore, computerScore);
         }
+        currentRound++;
     }
-
-    displayResult(userScore, computerScore);
 });
 
 let scrollVal = 0;

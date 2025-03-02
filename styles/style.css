@@ -6,3 +6,8 @@
     box-sizing: border-box;
     cursor: none;
 }
+
+.play-area,
+.result-area {
+    display: none;
+}
