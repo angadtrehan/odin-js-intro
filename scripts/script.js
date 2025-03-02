@@ -13,6 +13,9 @@ button.addEventListener("click", () => {
     const input = document.querySelector("input");
     rounds = parseInt(input.value) || rounds;
     cleanUp();
+    currentRound=0;
+    userScore=0;
+    computerScore=0;
 
     console.log(`We'll be playing ${rounds} rounds!`);
     displayRounds(rounds);
